@@ -1,0 +1,20 @@
+body {
+    font-family: "Hiragino Kaku Gothic Pro";
+}
+#header {
+    height: 64px;
+    background: #414141;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+}
+.icon-home {
+    margin-left: 160px;
+}
+.icon-header {
+    color: #FF963C;
+    float: right;
+
+}
+.icon-url {
+    margin: 0 20px 0 16px;
+    padding: 13px 16px 13px 8px;
+}

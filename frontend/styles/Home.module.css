@@ -1,0 +1,117 @@
+.main {
+  min-height: 1312px;
+}
+.rowCustom {
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+.dateAchievement {
+  min-height: 450px;
+  background: url("/background/date_achievement.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+}
+
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.chart {
+  background-color: #2E2E2E;
+}
+.lineChart {
+  min-height: 450px;
+}
+.rowCustom .dietDay:first-child {
+  margin-left: 20%;
+}
+.dietDay {
+  width: 100%;
+  display: flex;
+  float: left;
+  justify-content: center;
+  margin: 30px 0 30px 0;
+}
+.colDiet {
+  flex :  0.2 0;
+}
+.contentDiet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.diet {
+  width: 190px;
+  height: 220px;
+  background: url("/background/bg_diet.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+}
+
+.contentDiet p {
+  font-size: 20px;
+  padding: 10px 0 0 10px;
+}
+
+.foodDate {
+  min-width: 300px;
+  min-height: 300px;
+  position: relative;
+}
+.foodDate img {
+  margin: 8px;
+  z-index: 1;
+}
+
+.foodDateTitle {
+  color: white;
+  background-color: #FFCC21;
+  min-width: 120px;
+  min-height: 32px;
+  font-size: 18px;
+  padding: 10px 25px 0 8px;
+  position: absolute;
+  bottom: -144px;
+  left: 8px;
+  z-index: 2;
+}
+.btnTop {
+ justify-content: center;
+  margin: 28px 0 40px 0;
+}
+.btnTopPage {
+  min-width: 296px;
+  height: 56px;
+  background: linear-gradient(
+          to top,
+          #FFCC21, #FF963C
+  )  repeat scroll 0 0 transparent;
+  border: 1px solid linear-gradient(
+          to bottom,
+          transparent,
+          rgb(var(--background-end-rgb))
+  )
+  rgb(var(--background-start-rgb));
+  border-radius: 3px;
+  color: white;
+}
+@media only screen and (min-width: 768px) {
+  .detailDiet {
+    max-width: 1269px;
+  }
+}
+
