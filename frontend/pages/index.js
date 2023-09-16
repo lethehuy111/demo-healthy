@@ -5,8 +5,9 @@ import 'react-circular-progressbar/dist/styles.css';
 import React from "react";
 import Chart from "chart.js";
 import Image from "next/image";
+import {ProtectRoute} from "@/services/protectedRoutes";
 
-export default function Home() {
+ function TopPage() {
     React.useEffect(() => {
         var config = {
             type: "line", data: {
@@ -83,7 +84,7 @@ export default function Home() {
                     <div style={{width: 200, height: 200}} className={styles.circle}>
                         <CircularProgressbar
                             value={75}
-                            text={`${75}%`}
+                            text={`05/21 ${75}%`}
                             styles={buildStyles({
                                 rotation: 0.25,
                                 strokeLinecap: 'butt',
@@ -104,12 +105,7 @@ export default function Home() {
                         className={`relative flex flex-col min-w-0 break-words w-full mb-6 rounded ${styles.chart}`}>
                         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                             <div className="flex flex-wrap items-center">
-                                <div className="relative w-full max-w-full flex-grow flex-1">
-                                    <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                                        Overview
-                                    </h6>
-                                    <h2 className="text-white text-xl font-semibold">Sales value</h2>
-                                </div>
+
                             </div>
                         </div>
                         <div className="p-4 flex-auto">
@@ -277,3 +273,4 @@ export default function Home() {
         </main>
     </>)
 }
+export default ProtectRoute(TopPage);

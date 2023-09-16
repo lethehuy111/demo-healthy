@@ -1,6 +1,8 @@
 ## Install source backend
 
-    cd backend/
+    git clone git@github.com:lethehuy111/interview-arent.git
+
+    cd interview-arent/backend/
 
     ./composer-install.sh 
 
@@ -12,7 +14,7 @@
    # Note: open file .env and update 
 
     DB_CONNECTION=mysql
-    DB_HOST=logistic-mysql
+    DB_HOST=mysql
     DB_PORT=3306
     DB_DATABASE=app
     DB_USERNAME=app
@@ -42,7 +44,7 @@
 
     cd ../frontend/
 
-    npm install
+    npm install --legacy-peer-deps
 
     npm run dev
     
