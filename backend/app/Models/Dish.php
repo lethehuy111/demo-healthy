@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Dish extends Model
 {
     use HasFactory;
+    const LINK_FILE = "images/dishs/";
 
     protected $table = "dishs";
 
@@ -24,4 +26,12 @@ class Dish extends Model
         "parent_id",
         "status"
     ];
+
+    /**
+     * @return string
+     */
+    public function getFullImageAttribute(): string
+    {
+        return url(Storage::url(self::LINK_FILE . $this->image));
+    }
 }

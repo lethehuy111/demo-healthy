@@ -18,3 +18,9 @@
     line-height: 16px;
     letter-spacing: 0.03px
 }
+#scrollTop {
+    position: fixed;
+    bottom: 30px;
+    right: 100px;
+    z-index: 99;
+}

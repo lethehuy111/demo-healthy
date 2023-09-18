@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserDiet extends Model
 {
@@ -17,4 +18,9 @@ class UserDiet extends Model
         "diet_id",
         "status"
     ];
+
+    public function diet(): BelongsTo
+    {
+        return $this->belongsTo(Diet::class, 'diet_id', 'id');
+    }
 }

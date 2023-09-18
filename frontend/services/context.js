@@ -5,9 +5,9 @@ import cogoToast from "cogo-toast";
 import Router from "next/router";
 import { getCookieFromBrowser, removeCookie, setCookie } from "./cookies";
 
-const ServiceApiContext = createContext({});
+const AuthContext = createContext({});
 
-export const ServiceApiProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -60,7 +60,7 @@ export const ServiceApiProvider = ({ children }) => {
     };
 
     return (
-        <ServiceApiContext.Provider
+        <AuthContext.Provider
             value={{
                 isAuthenticated: !!user,
                 user,
@@ -70,10 +70,10 @@ export const ServiceApiProvider = ({ children }) => {
             }}
         >
             {children}
-        </ServiceApiContext.Provider>
+        </AuthContext.Provider>
     );
 };
 
 export default function useAuth() {
-    return useContext(ServiceApiContext);
+    return useContext(AuthContext);
 }

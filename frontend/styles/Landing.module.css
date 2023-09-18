@@ -1,0 +1,129 @@
+.main {
+    min-height: 970px;
+}
+.rowCustom {
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-0.5 * var(--bs-gutter-x));
+    margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+.rowCustom .dietDay:first-child {
+    margin-left: 20%;
+}
+
+.dietDay {
+    width: 100%;
+    display: flex;
+    float: left;
+    justify-content: center;
+    margin: 30px 0 30px 0;
+}
+
+.colDiet {
+    flex :  0.2 0;
+}
+.contentDiet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    margin-left: 5px;
+    margin-top: 10px;
+    justify-content: center;
+    background-color: #2E2E2E;
+}
+.diet {
+    width: 216px;
+    height: 165px;
+    background-color: #2E2E2E;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.contentDiet p {
+    font-size: 20px;
+    padding-top: 10px;
+    text-align: center;
+}
+.diet h5 {
+    color: #FFCC21;
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+.diet hr{
+    color: #FFFFFF;
+    margin: auto;
+}
+.diet p {
+    margin-top: 12px;
+    color: #FFFFFF;
+    font-size: 18px;
+}
+.foodDate {
+    max-width: 310px;
+    min-height: 300px;
+    position: relative;
+}
+.foodDate img {
+    margin: 8px;
+    z-index: 1;
+}
+.titleNews {
+    padding-left: 10px;
+}
+.foodDateTitle {
+    color: white;
+    background-color: #FFCC21;
+    min-width: 120px;
+    max-height: 32px;
+    font-size: 18px;
+    padding: 6px 25px 0 8px;
+    position: absolute;
+    bottom: 107px;
+    left: 8px;
+    z-index: 2;
+}
+.btnTop {
+    justify-content: center;
+    margin: 28px 0 40px 0;
+}
+.landingPage {
+    min-width: 296px;
+    height: 56px;
+    background: linear-gradient(
+            to top,
+            #FFCC21, #FF963C
+    )  repeat scroll 0 0 transparent;
+    border: 1px solid linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+    border-radius: 3px;
+    color: white;
+}
+.tag {
+    padding-left: 10px;
+    max-width: 65%;
+}
+.tag span {
+    color: #FF963C;
+}
+.detailDiet {
+    margin-left: 30px;
+}
+@media only screen and (min-width: 768px) {
+    .news {
+        max-width: 72%;
+        margin: 0 auto;
+    }
+}
+

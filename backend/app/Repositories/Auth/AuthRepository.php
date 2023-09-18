@@ -18,12 +18,13 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
      */
     public function __construct(User $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
     }
 
     /**
      * @param array $params
      * @return User
+     * @throws BusinessException
      */
     public function login(array $params) : User
     {
@@ -37,7 +38,10 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         return $user;
     }
 
-    public function logout()
+    /**
+     * @return void
+     */
+    public function logout(): void
     {
         auth()->logout();
     }

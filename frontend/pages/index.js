@@ -2,78 +2,128 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import {buildStyles, CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Chart from "chart.js";
 import Image from "next/image";
 import {ProtectRoute} from "@/services/protectedRoutes";
+import ServiceApi from "@/services/sevice.api"
 
- function TopPage() {
-    React.useEffect(() => {
-        var config = {
-            type: "line", data: {
-                labels: ["6月", "7月", "8月", "9月", "10月", "11月", "12月"], backgroundColor: '#2E2E2E', datasets: [{
-                    label: new Date().getFullYear(),
-                    backgroundColor: "#3182ce",
-                    borderColor: "#3182ce",
-                    data: [65, 78, 66, 44, 56, 67, 75],
-                    fill: false,
-                }, {
-                    label: new Date().getFullYear() - 1,
-                    fill: false,
-                    backgroundColor: "#edf2f7",
-                    borderColor: "#edf2f7",
-                    data: [40, 68, 86, 74, 56, 60, 87],
-                },],
-            }, options: {
-                maintainAspectRatio: false, responsive: true, title: {
-                    display: false, text: "Sales Charts", fontColor: "white",
-                }, legend: {
-                    labels: {
-                        fontColor: "white",
-                    }, align: "end", position: "bottom",
-                }, tooltips: {
-                    mode: "index", intersect: false,
-                }, hover: {
-                    mode: "nearest", intersect: true,
-                }, scales: {
-                    xAxes: [{
-                        ticks: {
-                            fontColor: "#FFFFFF",
-                        }, display: true, scaleLabel: {
-                            display: true, labelString: "Month", fontColor: "white",
-                        }, gridLines: {
-                            display: true,
-                            borderDash: [2],
-                            borderDashOffset: [2],
-                            color: "#777777",
-                            zeroLineColor: "#777777",
-                            zeroLineBorderDash: [2],
-                            zeroLineBorderDashOffset: [2],
-                        },
-                    },], yAxes: [{
-                        ticks: {
-                            fontColor: "rgba(255,255,255,.7)",
-                        }, display: false, scaleLabel: {
-                            display: false, labelString: "Value", fontColor: "white",
-                        }, gridLines: {
-                            borderDash: [3],
-                            borderDashOffset: [3],
-                            drawBorder: false,
-                            color: "rgba(255, 255, 255, 0.15)",
-                            zeroLineColor: "rgba(33, 37, 41, 0)",
-                            zeroLineBorderDash: [2],
-                            zeroLineBorderDashOffset: [2],
-                        },
+function TopPage() {
+     const [dateAchievement, setDateAchievement] = useState([]);
+     const [diets, setDiets] = useState([]);
+     const [dishs, setDishs] = useState([]);
+     const [page, setPage] = useState(1);
+    const asyncFetchDateAchievement = async () => {
+        let res = await ServiceApi.get('/date-achievement')
+        if (typeof res !== 'undefined' && res.return) {
+            setDateAchievement(res.result)
+        }
+    }
+    const asyncFetchDiet = async () => {
+        let res = await ServiceApi.get('/diet')
+        if (typeof res !== 'undefined' && res.return) {
+            setDiets(res.result)
+        }
+    }
+
+    const asyncFetchHistoryHeath = async () => {
+        let res = await ServiceApi.get('/history-heath')
+        if (typeof res !== 'undefined' && res.return) {
+            let data = res.result
+            var config = {
+                type: "line", data: {
+                    labels: data.month,
+                    backgroundColor: '#2E2E2E',
+                    datasets: [{
+                        label: '重さ',
+                        backgroundColor: "#FFCC21",
+                        borderColor: "#FFCC21",
+                        data: data.weight,
+                        fill: false,
+                    }, {
+                        label: '体脂肪',
+                        fill: false,
+                        backgroundColor: "#8FE9D0",
+                        borderColor: "#8FE9D0",
+                        data: data.body_fat_percent,
                     },],
+                }, options: {
+                    maintainAspectRatio: false, responsive: true, title: {
+                        display: false, text: "Sales Charts", fontColor: "white",
+                    }, legend: {
+                        labels: {
+                            fontColor: "white",
+                        }, align: "end", position: "bottom",
+                    }, tooltips: {
+                        mode: "index", intersect: false,
+                    }, hover: {
+                        mode: "nearest", intersect: true,
+                    }, scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "#FFFFFF",
+                            }, display: true, scaleLabel: {
+                                display: true, labelString: "Month", fontColor: "white",
+                            }, gridLines: {
+                                display: true,
+                                borderDash: [2],
+                                borderDashOffset: [2],
+                                color: "#777777",
+                                zeroLineColor: "#777777",
+                                zeroLineBorderDash: [2],
+                                zeroLineBorderDashOffset: [2],
+                            },
+                        },], yAxes: [{
+                            ticks: {
+                                fontColor: "rgba(255,255,255,.7)",
+                            }, display: false, scaleLabel: {
+                                display: false, labelString: "Value", fontColor: "white",
+                            }, gridLines: {
+                                borderDash: [3],
+                                borderDashOffset: [3],
+                                drawBorder: false,
+                                color: "rgba(255, 255, 255, 0.15)",
+                                zeroLineColor: "rgba(33, 37, 41, 0)",
+                                zeroLineBorderDash: [2],
+                                zeroLineBorderDashOffset: [2],
+                            },
+                        },],
+                    },
                 },
-            },
-        };
-        var ctx = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(ctx, config);
+            };
+            var ctx = document.getElementById("line-chart").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        }
+    }
+     async function asyncFetchDishs(page = 1) {
+         let res = await ServiceApi.get('/diet-dish-day', {'page': page})
+         if (typeof res !== 'undefined' && res.return) {
+             if (page !== 1) {
+                 let dataDishs = dishs
+                 res.result.push(...dataDishs)
+             }
+             setDishs(res.result)
+             let pagination = res.pagination
+             setPage(pagination.current_page)
+             if (pagination.current_page === pagination.last_page) {
+                 document.getElementById('show-more').style.display = 'none'
+             }
+         }
+     }
+    async function loadMore() {
+        let currentPage = page
+        await asyncFetchDishs(++currentPage)
+    }
+
+    useEffect( () => {
+            asyncFetchDateAchievement()
+            asyncFetchHistoryHeath()
+            asyncFetchDiet()
+            asyncFetchDishs()
     }, []);
     return (<>
         <Head>
-            <title>Create Next App</title>
+            <title>Home</title>
             <meta name="description" content="Generated by create next app"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <link rel="icon" href="/favicon.ico"/>
@@ -82,9 +132,10 @@ import {ProtectRoute} from "@/services/protectedRoutes";
             <div className={styles.rowCustom}>
                 <div className={`col-md-5 ${styles.dateAchievement}`}>
                     <div style={{width: 200, height: 200}} className={styles.circle}>
+                        { typeof dateAchievement.day !== 'undefined' && dateAchievement.rate !== 'undefined'  ?
                         <CircularProgressbar
-                            value={75}
-                            text={`05/21 ${75}%`}
+                            value={dateAchievement.rate}
+                            text={`${dateAchievement.day} ${dateAchievement.rate}%`}
                             styles={buildStyles({
                                 rotation: 0.25,
                                 strokeLinecap: 'butt',
@@ -92,12 +143,12 @@ import {ProtectRoute} from "@/services/protectedRoutes";
 
                                 pathTransitionDuration: 0.5,
 
-                                pathColor: `rgba(62, 152, 199, ${75 / 100})`,
+                                pathColor: `rgba(62, 152, 199, ${dateAchievement.rate / 100})`,
                                 textColor: '#FFFFFF',
                                 trailColor: '#FFFFFF',
-                                backgroundColor: 'none',
                             })}
-                        />;
+                        />
+                             : (<div></div>)}
                     </div>
                 </div>
                 <div className="col-md-7">
@@ -117,159 +168,51 @@ import {ProtectRoute} from "@/services/protectedRoutes";
                     </div>
                 </div>
             </div>
+            {  typeof diets !== 'undefined' && diets.length !== 0 ?
             <div className={`${styles.rowCustom}`}>
-                <a className={`${styles.dietDay} ${styles.colDiet}`}>
+                {diets.map((diet,index) => (
+                <a className={`${styles.dietDay} ${styles.colDiet}`} key={index} href="#">
                     <div className={styles.diet}>
                         <div className={styles.contentDiet}>
                             <Image
-                                src="/background/image_diet.png"
+                                src={diet.icon}
                                 alt="Vercel Logo"
                                 width={100}
                                 height={84}
                                 priority
                             />
-                            <p>Morning</p>
+                            <p>{diet.name}</p>
                         </div>
                     </div>
                 </a>
-
-                <a className={`${styles.dietDay} ${styles.colDiet}`}>
-                    <div className={styles.diet}>
-                        <div className={styles.contentDiet}>
-                            <Image
-                                src="/background/image_diet.png"
-                                alt="Vercel Logo"
-                                width={100}
-                                height={84}
-                                priority
-                            />
-                            <p>Morning</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a className={`${styles.dietDay} ${styles.colDiet}`}>
-                    <div className={styles.diet}>
-                        <div className={styles.contentDiet}>
-                            <Image
-                                src="/background/image_diet.png"
-                                alt="Vercel Logo"
-                                width={100}
-                                height={84}
-                                priority
-                            />
-                            <p>Morning</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a className={`${styles.dietDay} ${styles.colDiet}`}>
-                    <div className={styles.diet}>
-                        <div className={styles.contentDiet}>
-                            <Image
-                                src="/background/image_diet.png"
-                                alt="Vercel Logo"
-                                width={100}
-                                height={84}
-                                priority
-                            />
-                            <p>Morning</p>
-                        </div>
-                    </div>
-                </a>
+                ))}
             </div>
-
-            {/*detail diet*/}
+             : <div></div>}
+            { typeof dishs !== 'undefined' && dishs.length !== 0 ?
             <div className={styles.rowCustom} style={{justifyContent: "center"}}>
                 <div className={styles.detailDiet}>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
+                    {dishs.map((diet,index) => (
+                    <a className={styles.foodDate} key={index} href="#">
+                        <Image src={diet.image}
                                alt="morning"
                                width={300}
                                height={300}
                                priority/>
                         <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
+                            <p>{diet.date} <span>{diet.diet_name}</span></p>
                         </div>
                     </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
-                    <a className={styles.foodDate}>
-                        <Image src="/foods/morning.png"
-                               alt="morning"
-                               width={300}
-                               height={300}
-                               priority/>
-                        <div className={styles.foodDateTitle}>
-                            <p>05.21 <span>Morning</span></p>
-                        </div>
-                    </a>
+                    ))}
                 </div>
             </div>
-
-            <div className={`${styles.rowCustom} ${styles.btnTop}`}>
-                <button className={styles.btnTopPage}>
+                : <div></div>}
+            { typeof dishs !== 'undefined' && dishs.length !== 0 ?
+            <div className={`${styles.rowCustom} ${styles.btnTop}`} id="show-more">
+                <button className={styles.btnTopPage} onClick={loadMore}>
                     記録をもっと見る
                 </button>
             </div>
+            : <div></div> }
         </main>
     </>)
 }

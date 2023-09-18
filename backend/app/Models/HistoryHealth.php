@@ -19,4 +19,9 @@ class HistoryHealth extends Model
         "type",
         "date"
     ];
+
+
+    protected $casts = [
+        'date' => 'datetime'
+    ];
 }

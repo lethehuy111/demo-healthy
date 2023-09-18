@@ -1,11 +1,12 @@
 import Image from "next/image";
+import NextLink from "next/link";
 
 export default function Header() {
     return <>
     <div id="header">
         <nav className="navbar">
             
-            <a className="navbar-brand icon-home" href="#">
+            <NextLink className="navbar-brand icon-home" href="/">
                 <svg width="109" height="40" viewBox="0 0 109 40" fill="none" >
                     <g clip-path="url(#clip0_42309_360)">
                         <path d="M15.8646 11.5165H25.3419V19.313H28.9509V0.0280151H25.3419V8.15522H15.8646V0.0280151H12.228V19.313H15.8646V11.5165Z" fill="#FF963C"/>
@@ -22,7 +23,7 @@ export default function Header() {
                         </clipPath>
                     </defs>
                 </svg>
-            </a>
+            </NextLink>
             <div className="icon-header">
                 <a href="#" className="icon-url">
                 <Image
