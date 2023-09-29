@@ -64,9 +64,5 @@
 # Link TopPage : http://localhost:3000/
 # Link Column page without Login : http://localhost:3000/landing-page
 # Link Login : http://localhost:3000/login  // user : huylt@gmail.com / 123456
-
-#The system don't have manage page , but we can develop below : 
-- add diets, dish , news , update history heath for customer each month
-- customer can chose diet, update dietDay and follow diet each day
 # Refer structure Db : erd.png 
     
