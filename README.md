@@ -62,8 +62,12 @@
     npm run dev
 
  Link TopPage : http://localhost:3000/
+ 
  Link Column page without Login : http://localhost:3000/landing-page
+ 
  Link Login : http://localhost:3000/login  
+ 
  User : huylt@gmail.com / 123456
+ 
  Refer structure Db : erd.png 
     
